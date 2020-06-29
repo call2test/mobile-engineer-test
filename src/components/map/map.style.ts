@@ -20,6 +20,9 @@ export const MapContainer = styled(View)`
 export const ToggleSelectButton = styled(
   Platform.OS === 'ios' ? TouchableOpacity : View,
 )`
+  display: flex;
+  ${Platform.OS === 'ios' && 'align-items: center'};
+  justify-content: center;
   position: absolute;
   bottom: ${Platform.OS === 'ios' ? hp(4) : hp(8)}px;
   align-self: center;
@@ -29,6 +32,7 @@ export const ToggleSelectButton = styled(
   border-radius: 20px;
   color: #fff;
   box-shadow: 2px 2px 5px;
+  elevation: 5;
   z-index: 100;
 `;
 

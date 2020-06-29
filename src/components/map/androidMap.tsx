@@ -3,12 +3,14 @@ import {StyledMap, mapStyleJson, ToggleSelectButton} from './map.style';
 import {PROVIDER_GOOGLE} from 'react-native-maps';
 import {regionInterface} from './mapInterfaces';
 import {Picker} from '@react-native-community/picker';
+import {useState} from 'react';
 
 type Props = {
   initialRegion: regionInterface;
 };
 
 const AndroidMap: React.FC<Props> = ({initialRegion}) => {
+  const [selected, setSelected] = useState<string>('movie1');
   return (
     <>
       <StyledMap
@@ -19,7 +21,9 @@ const AndroidMap: React.FC<Props> = ({initialRegion}) => {
         customMapStyle={mapStyleJson}
       />
       <ToggleSelectButton>
-        <Picker selectedValue={'movie1'}>
+        <Picker
+          selectedValue={selected}
+          onValueChange={(val) => setSelected(val.toString())}>
           <Picker.Item label="Movie1" value="movie1" />
           <Picker.Item label="Movie2" value="movie2" />
           <Picker.Item label="Movie3" value="movie3" />

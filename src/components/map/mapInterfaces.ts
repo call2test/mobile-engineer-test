@@ -3,4 +3,4 @@ export interface regionInterface {
   longitude: number;
   latitudeDelta: number;
   longitudeDelta: number;
-};
+}
