@@ -1,14 +1,35 @@
-import {View} from 'react-native';
+import {View, TouchableOpacity, Platform} from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components';
 import {
-  heightPercentageToDP as hp,
   widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 export const StyledMap = styled(MapView)`
+  height: ${hp(100)}px;
   width: ${wp(100)}px;
-  height: ${hp(90)}px;
+`;
+
+export const MapContainer = styled(View)`
+  height: ${hp(100)}px;
+  width: ${wp(100)}px;
+  background-color: #fdfcf8;
+`;
+
+export const ToggleSelectButton = styled(
+  Platform.OS === 'ios' ? TouchableOpacity : View,
+)`
+  position: absolute;
+  bottom: ${Platform.OS === 'ios' ? hp(4) : hp(8)}px;
+  align-self: center;
+  height: ${hp(8)}px;
+  width: ${wp(30)}px;
+  background-color: tomato;
+  border-radius: 20px;
+  color: #fff;
+  box-shadow: 2px 2px 5px;
+  z-index: 100;
 `;
 
 export const mapStyleJson = [
