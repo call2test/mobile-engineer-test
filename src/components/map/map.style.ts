@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, Platform} from 'react-native';
+import {View, TouchableOpacity, Platform, Text} from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components';
 import {
@@ -22,18 +22,23 @@ export const ToggleSelectButton = styled(
 )`
   display: flex;
   ${Platform.OS === 'ios' && 'align-items: center'};
-  justify-content: center;
+  justify-content: space-evenly;
   position: absolute;
   bottom: ${Platform.OS === 'ios' ? hp(4) : hp(8)}px;
   align-self: center;
-  height: ${hp(8)}px;
-  width: ${wp(30)}px;
+  height: ${hp(10)}px;
+  width: ${wp(50)}px;
   background-color: tomato;
   border-radius: 20px;
-  color: #fff;
   box-shadow: 2px 2px 5px;
   elevation: 5;
   z-index: 100;
+`;
+
+export const SelectText = styled(Text)`
+  align-self: center;
+  font-weight: 600;
+  color: #fff;
 `;
 
 export const mapStyleJson = [
