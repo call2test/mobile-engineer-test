@@ -1,16 +1,22 @@
 import * as React from 'react';
-import {StyledMap, mapStyleJson, ToggleSelectButton} from './map.style';
+import {
+  StyledMap,
+  mapStyleJson,
+  ToggleSelectButton,
+  SelectText,
+} from './map.style';
 import {PROVIDER_GOOGLE} from 'react-native-maps';
-import {regionInterface} from './mapInterfaces';
+import {FeatureHash, Region} from '../../helpers/interfaces';
 import {Picker} from '@react-native-community/picker';
 import {useState} from 'react';
 
 type Props = {
-  initialRegion: regionInterface;
+  initialRegion: Region;
+  movies: FeatureHash;
 };
 
-const AndroidMap: React.FC<Props> = ({initialRegion}) => {
-  const [selected, setSelected] = useState<string>('movie1');
+const AndroidMap: React.FC<Props> = ({initialRegion, movies}) => {
+  const [selected, setSelected] = useState<string>('None');
   return (
     <>
       <StyledMap
@@ -21,15 +27,16 @@ const AndroidMap: React.FC<Props> = ({initialRegion}) => {
         customMapStyle={mapStyleJson}
       />
       <ToggleSelectButton>
-        <Picker
-          selectedValue={selected}
-          onValueChange={(val) => setSelected(val.toString())}>
-          <Picker.Item label="Movie1" value="movie1" />
-          <Picker.Item label="Movie2" value="movie2" />
-          <Picker.Item label="Movie3" value="movie3" />
-          <Picker.Item label="Movie4" value="movie4" />
-          <Picker.Item label="Movie5" value="movie5" />
-        </Picker>
+        <SelectText>Selected Movie:</SelectText>
+        {movies && (
+          <Picker
+            selectedValue={selected}
+            onValueChange={(val: string) => setSelected(val)}>
+            {Object.keys(movies).map((movieTitle) => {
+              return <Picker.Item label={movieTitle} value={movieTitle} />;
+            })}
+          </Picker>
+        )}
       </ToggleSelectButton>
     </>
   );
