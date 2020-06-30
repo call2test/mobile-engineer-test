@@ -29,10 +29,11 @@ export const useAbqOpenData = () => {
 };
 
 export const useSelect = () => {
+  const [isSelectToggled, toggleSelect] = useState<boolean>(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [locations, setLocations] = useState<Array<Feature> | null>(null);
   return [
-    {selected, locations},
-    {setSelected, setLocations},
+    {selected, locations, isSelectToggled},
+    {setSelected, setLocations, toggleSelect},
   ];
 };

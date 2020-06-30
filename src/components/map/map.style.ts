@@ -14,7 +14,7 @@ export const StyledMap = styled(MapView)`
 export const MapContainer = styled(View)`
   height: ${hp(100)}px;
   width: ${wp(100)}px;
-  background-color: #fdfcf8;
+  background-color: #ebe3cd;
 `;
 
 export const ToggleSelectButton = styled(
@@ -22,21 +22,53 @@ export const ToggleSelectButton = styled(
 )`
   display: flex;
   ${Platform.OS === 'ios' && 'align-items: center'};
-  justify-content: space-evenly;
+  justify-content: center;
   position: absolute;
   bottom: ${Platform.OS === 'ios' ? hp(4) : hp(8)}px;
   align-self: center;
   height: ${hp(10)}px;
   width: ${wp(50)}px;
-  background-color: tomato;
+  background-color: #ff6347;
   border-radius: 20px;
-  box-shadow: 2px 2px 5px;
+  box-shadow: 0px 1px 2px;
   elevation: 5;
   z-index: 100;
 `;
 
+export const MapHeader = styled(View)`
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  background-color: #ae9e90;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: ${hp(12)}px;
+  width: ${wp(100)}px;
+  box-shadow: 0px 1px 2px;
+  elevation: 5;
+`;
+
+export const MapHeaderText = styled(Text)`
+  font-weight: 600;
+  z-index: 100;
+  align-self: center;
+  color: #fff;
+  font-size: ${hp(5)}px;
+`;
+
 export const SelectText = styled(Text)`
   align-self: center;
+  font-size: ${hp(3)}px;
+  font-weight: 600;
+  color: #fff;
+`;
+
+export const SelectTextAndroid = styled(Text)`
+  position: absolute;
+  bottom: ${hp(3.5)}px;
+  align-self: center;
+  font-size: ${hp(3)}px;
   font-weight: 600;
   color: #fff;
 `;

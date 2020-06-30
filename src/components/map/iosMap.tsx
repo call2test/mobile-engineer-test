@@ -7,11 +7,13 @@ import {
   StyledCallout,
   CalloutTitle,
   CalloutText,
+  MapHeader,
+  MapHeaderText,
 } from './map.style';
 import {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {FeatureHash, Region} from '../../helpers/interfaces';
 import {Picker} from '@react-native-community/picker';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useSelect} from './mapHooks';
 
 type Props = {
@@ -20,8 +22,10 @@ type Props = {
 };
 
 const IosMap: React.FC<Props> = ({initialRegion, movies}) => {
-  const [isSelectToggled, toggleSelect] = useState<boolean>(false);
-  const [{locations, selected}, {setSelected, setLocations}] = useSelect();
+  const [
+    {locations, selected, isSelectToggled},
+    {setSelected, setLocations, toggleSelect},
+  ] = useSelect();
   useEffect(() => {
     if (movies) {
       const initialTitle = Object.entries(movies)[0][0];
@@ -38,34 +42,46 @@ const IosMap: React.FC<Props> = ({initialRegion, movies}) => {
   return (
     <>
       {!isSelectToggled && (
-        <StyledMap
-          provider={PROVIDER_GOOGLE}
-          initialRegion={initialRegion}
-          showsUserLocation={false}
-          followsUserLocation={false}
-          customMapStyle={mapStyleJson}>
-          {locations &&
-            locations.map((location, index) => {
-              const {
-                geometry: {x, y},
-                attributes: {Title, ShootDate, Site, Address},
-              } = location;
-              const date = new Date(ShootDate);
-              return (
-                <Marker key={index} coordinate={{latitude: y, longitude: x}}>
-                  <StyledCallout>
-                    <CalloutTitle>{Title}</CalloutTitle>
-                    <CalloutText>Site: {Site}</CalloutText>
-                    <CalloutText>Address: {Address}</CalloutText>
-                    <CalloutText>Date: {date.toDateString()}</CalloutText>
-                  </StyledCallout>
-                </Marker>
-              );
-            })}
-        </StyledMap>
+        <>
+          <MapHeader>
+            <MapHeaderText>{selected}</MapHeaderText>
+          </MapHeader>
+          <StyledMap
+            provider={PROVIDER_GOOGLE}
+            initialRegion={initialRegion}
+            showsUserLocation={false}
+            followsUserLocation={false}
+            customMapStyle={mapStyleJson}>
+            {locations &&
+              locations.map((location, index) => {
+                const {
+                  geometry: {x, y},
+                  attributes: {Title, ShootDate, Site, Address},
+                } = location;
+                const date = ShootDate && new Date(ShootDate);
+                return (
+                  <Marker key={index} coordinate={{latitude: y, longitude: x}}>
+                    <StyledCallout>
+                      <CalloutTitle>{Title}</CalloutTitle>
+                      <CalloutText>
+                        Site: {Site ? Site : 'Not Available'}
+                      </CalloutText>
+                      <CalloutText>
+                        Address: {Address ? Address : 'Not Available'}
+                      </CalloutText>
+                      <CalloutText>
+                        Date: {date ? date.toDateString() : 'Not Available'}
+                      </CalloutText>
+                    </StyledCallout>
+                  </Marker>
+                );
+              })}
+          </StyledMap>
+        </>
       )}
       {movies && (
         <Picker
+          style={{marginTop: '50%'}}
           selectedValue={selected}
           onValueChange={(val: string) => handleSelect(val)}>
           {Object.keys(movies).map((movieTitle, index) => {
@@ -76,8 +92,7 @@ const IosMap: React.FC<Props> = ({initialRegion, movies}) => {
         </Picker>
       )}
       <ToggleSelectButton onPress={() => toggleSelect(!isSelectToggled)}>
-        <SelectText>Selected Movie:</SelectText>
-        <SelectText numberOfLines={1}>{selected}</SelectText>
+        <SelectText>{isSelectToggled ? 'Confirm' : 'Select Movie'}</SelectText>
       </ToggleSelectButton>
     </>
   );

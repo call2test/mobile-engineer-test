@@ -3,10 +3,11 @@ import {
   StyledMap,
   mapStyleJson,
   ToggleSelectButton,
-  SelectText,
+  SelectTextAndroid,
   StyledCallout,
   CalloutTitle,
   CalloutText,
+  MapHeader, MapHeaderText,
 } from './map.style';
 import {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {FeatureHash, Region} from '../../helpers/interfaces';
@@ -36,6 +37,9 @@ const AndroidMap: React.FC<Props> = ({initialRegion, movies}) => {
   };
   return (
     <>
+      <MapHeader>
+        <MapHeaderText>{selected}</MapHeaderText>
+      </MapHeader>
       <StyledMap
         provider={PROVIDER_GOOGLE}
         initialRegion={initialRegion}
@@ -48,23 +52,30 @@ const AndroidMap: React.FC<Props> = ({initialRegion, movies}) => {
               geometry: {x, y},
               attributes: {Title, ShootDate, Site, Address},
             } = location;
-            const date = new Date(ShootDate);
+            const date = ShootDate && new Date(ShootDate);
             return (
               <Marker key={index} coordinate={{latitude: y, longitude: x}}>
                 <StyledCallout>
                   <CalloutTitle>{Title}</CalloutTitle>
-                  <CalloutText>Site: {Site}</CalloutText>
-                  <CalloutText>Address: {Address}</CalloutText>
-                  <CalloutText>Date: {date.toDateString()}</CalloutText>
+                  <CalloutText>
+                    Site: {Site ? Site : 'Not Available'}
+                  </CalloutText>
+                  <CalloutText>
+                    Address: {Address ? Address : 'Not Available'}
+                  </CalloutText>
+                  <CalloutText>
+                    Date: {date ? date.toDateString() : 'Not Available'}
+                  </CalloutText>
                 </StyledCallout>
               </Marker>
             );
           })}
       </StyledMap>
       <ToggleSelectButton>
-        <SelectText>Selected Movie:</SelectText>
+        <SelectTextAndroid>Select Movie</SelectTextAndroid>
         {movies && (
           <Picker
+            style={{zIndex: 101, color: 'transparent'}}
             selectedValue={selected}
             onValueChange={(val: string) => handleSelect(val)}>
             {Object.keys(movies).map((movieTitle, index) => {
