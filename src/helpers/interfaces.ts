@@ -6,6 +6,10 @@ export interface Region {
 }
 
 export interface Feature {
+  geometry: {
+    x?: number;
+    y?: number;
+  };
   attributes: {
     Address?: string;
     IMDbLink?: string;
@@ -16,12 +20,6 @@ export interface Feature {
     Title?: string;
     Type: string;
   };
-}
-
-export interface Result {
-  data: {};
-  isLoading: boolean;
-  isError: boolean;
 }
 
 export interface FeatureHash {

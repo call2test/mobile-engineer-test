@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {hashFeatures} from '../../helpers/data';
-import {Feature, Result} from '../../helpers/interfaces';
+import {Feature} from '../../helpers/interfaces';
 
 export const useAbqOpenData = () => {
   const [data, setData] = useState<{}>();
-  const [url, setUrl] = useState('');
+  const [url, setFetchURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -25,6 +25,14 @@ export const useAbqOpenData = () => {
 
     fetchData();
   }, [url]);
-  const result: Result = {data, isLoading, isError};
-  return [result, setUrl];
+  return [{data, isLoading, isError}, setFetchURL];
+};
+
+export const useSelect = () => {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [locations, setLocations] = useState<Array<Feature> | null>(null);
+  return [
+    {selected, locations},
+    {setSelected, setLocations},
+  ];
 };
