@@ -1,5 +1,5 @@
 import {View, TouchableOpacity, Platform, Text} from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Callout} from 'react-native-maps';
 import styled from 'styled-components';
 import {
   widthPercentageToDP as wp,
@@ -39,6 +39,21 @@ export const SelectText = styled(Text)`
   align-self: center;
   font-weight: 600;
   color: #fff;
+`;
+
+export const StyledCallout = styled(Callout)`
+  width: ${wp(60)}px;
+`;
+
+export const CalloutTitle = styled(Text)`
+  font-size: ${hp(3)}px;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
+export const CalloutText = styled(Text)`
+  font-size: ${hp(1.5)}px;
+  margin-bottom: 10px;
 `;
 
 export const mapStyleJson = [
